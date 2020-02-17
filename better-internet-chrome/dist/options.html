@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <button id="aaa"></button>
-    <div id="buttonDiv">
-    </div>
-    <div>
-      <p>Choose a different background color!</p>
-    </div>
-  </body>
-  <script src="options.js"></script>
-  <script src="tmp.js"></script>
+
+<head>
+  <style>
+    button {
+      height: 30px;
+      width: 30px;
+      outline: none;
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="aaa"></button>
+  <div id='receivedContent'></div>
+  <div id="buttonDiv">
+  </div>
+
+  <svg height="100" width="100">
+    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+  </svg>
+
+  <div>
+    <p>Choose a different background color!</p>
+  </div>
+</body>
+<script src="options.js"></script>
+<script src="data.js"></script>
+
 </html>
