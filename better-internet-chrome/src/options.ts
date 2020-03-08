@@ -1,9 +1,15 @@
 
+import ReactDOM from "react-dom"
+import { myButton } from "./optionsPage"
+
+
+
 chrome.storage.local.get(items => {
     let pac = items['pac'] as RawRecord[]
     let dis = document.getElementById('displayPanel')!
     let st = sortRequests(pac)
-    //ReactDOM.render(<UrlList domains={st} pac={[]} />, document.getElementById('displayPanel'))
+    // ReactDOM.render(getUrlList(st), dis)
+    ReactDOM.render(myButton, dis)
 })
 
 

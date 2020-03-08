@@ -1,4 +1,5 @@
 import React from "react"
+import { Button } from '@material-ui/core'
 
 class UrlList extends React.Component<DomainListProps, DomainListState> {
 
@@ -27,3 +28,7 @@ class UrlList extends React.Component<DomainListProps, DomainListState> {
         )
     }
 }
+
+export let myButton = <Button />
+
+export let getUrlList = (st: DomainStatistics) => <UrlList domains={st} pac={[]} />

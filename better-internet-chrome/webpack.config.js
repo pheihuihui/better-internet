@@ -3,12 +3,17 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         index_options: './src/options.ts',
-        index_popup: './src/popup.ts'
+        index_popup: './src/popup.ts',
+        background: './src/background.ts',
+
+    },
+    optimization: {
+        minimize: false
     },
     mode: "production",
     devtool: "source-map",
     resolve: {
-        extensions: [".ts", ".tsx"]
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
     module: {
         rules: [
@@ -28,10 +33,11 @@ module.exports = {
             }
         ]
     },
-    externals: {
-        react: "React",
-        "react-dom": "ReactDOM"
-    },
+    // externals: {
+    //     react: "React",
+    //     "react-dom": "ReactDOM",
+    //     "material-ui": "MaterialUI"
+    // },
     plugins: [
         new CopyPlugin([
             { from: './src/images/', to: './' },
