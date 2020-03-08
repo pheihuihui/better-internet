@@ -20,17 +20,17 @@
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/domain_16.png",
-      "32": "images/domain_32.png",
-      "48": "images/domain_48.png",
-      "128": "images/domain_128.png"
+      "16": "domain_16.png",
+      "32": "domain_32.png",
+      "48": "domain_48.png",
+      "128": "domain_128.png"
     }
   },
   "icons": {
-    "16": "images/domain_16.png",
-    "32": "images/domain_32.png",
-    "48": "images/domain_48.png",
-    "128": "images/domain_128.png"
+    "16": "domain_16.png",
+    "32": "domain_32.png",
+    "48": "domain_48.png",
+    "128": "domain_128.png"
   },
   "manifest_version": 2
 }

@@ -11,6 +11,7 @@ interface RequestDetails {
     url: string
     timeSpent: number
     resultStatus: StatusType
+    comments?: RawRecord[]
 }
 
 interface RawRecord {
@@ -22,5 +23,31 @@ interface RawRecord {
 }
 
 interface DomainStatistics {
-    [dimain: string]: RequestDetails[]
+    [domain: string]: RequestDetails[]
+}
+
+interface DomainListProps {
+    domains: DomainStatistics,
+    pac: string[]
+}
+
+interface DomainListState {
+    domains: DomainStatistics,
+    pac: string[],
+    selectedUrls: number[]
+}
+
+interface UrlItemProps {
+    domain: string,
+    pac: string[],
+    details: RequestDetails[]
+}
+
+interface UrlItemState {
+    id: number,
+    selected: boolean
+}
+
+interface RequestItemProps {
+    requests: RawRecord[]
 }

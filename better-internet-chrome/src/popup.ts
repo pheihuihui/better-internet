@@ -25,7 +25,7 @@ if (collectButton) {
             collectButton!.onclick = () => {
                 collectButton!.style.fill = 'green'
                 chrome.storage.local.set({ 'state': 'ready' })
-                chrome.tabs.create({ url: './options.html' })
+                //chrome.tabs.create({ url: './options.html' })
             }
         }
     })
