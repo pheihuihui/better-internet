@@ -92,3 +92,4 @@ obj
 appsettings.json
 local.settings.json
 
+dist/
