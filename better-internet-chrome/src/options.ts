@@ -1,18 +1,20 @@
 
 import ReactDOM from "react-dom"
-import { myButton } from "./optionsPage"
+import { myRequestInfosItem } from "./components/RequestInfosItem"
+import { RawRecord, DomainStatistics, RequestDetails } from "./DataTypes"
+import { myColl } from "./components/CollectedUrlItem"
+import { getMyPacForm } from "./components/PacForm"
 
 
 
 chrome.storage.local.get(items => {
-    let pac = items['pac'] as RawRecord[]
+    let collected = items['collected'] as RawRecord[]
     let dis = document.getElementById('displayPanel')!
-    let st = sortRequests(pac)
-    // ReactDOM.render(getUrlList(st), dis)
-    ReactDOM.render(myButton, dis)
+    let st = sortRequests(collected)
+    console.log(st)
+    let pacForm = getMyPacForm(st, [])
+    ReactDOM.render(pacForm, dis)
 })
-
-
 
 function sortRequests(recs: RawRecord[]) {
     let st: DomainStatistics = {}
@@ -98,7 +100,7 @@ function printDetails(detail: RequestDetails) {
     return `${detail.requestID}: \n\t${detail.timeSpent}\t${detail.resultStatus} \n\t${detail.url}\n`
 }
 
-function sortDomains(list: string[]) {
+export function sortDomains(list: string[]) {
     return list.sort((a, b) => {
         let fst = a.split('.').reverse()
         let scd = b.split('.').reverse()
@@ -118,4 +120,35 @@ function sortDomains(list: string[]) {
         }
         return res
     })
+}
+
+export function getColorFromDelay(delay: number) {
+    let begin = { R: 20, G: 240, B: 160 }
+    let end = { R: 240, G: 60, B: 40 }
+    let space = { R: end.R - begin.R, G: end.G - begin.G, B: end.B - begin.B }
+    let gap = delay / 1000000 / 5
+    if (gap > 1) {
+        gap = 1
+    } else if (gap < 0) {
+        gap = 0
+    }
+    let res = { R: begin.R + space.R * gap, G: begin.G + space.G * gap, B: begin.B + space.B * gap }
+    return `#${(Number(res.R.toFixed())).toString(16)}${(Number(res.G.toFixed())).toString(16)}${(Number(res.B.toFixed())).toString(16)}`
+}
+
+export function isMatched(long: string, short: string) {
+    let shs = short.split('.')
+    let los = long.split('.')
+    while (shs.length >= 1 && los.length >= 1) {
+        let a = shs.pop()
+        let b = los.pop()
+        if (a != b) {
+            return false
+        }
+    }
+    if (shs.length > 0) {
+        return false
+    } else {
+        return true
+    }
 }

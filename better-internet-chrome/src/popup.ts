@@ -1,32 +1,28 @@
-
-let currentButtonState: ButtonState = 'ready'
+import { ButtonState } from "./DataTypes"
 
 let collectButton = document.getElementById('collectButton') as SVGCircleElement | null
 
-let tmppac: string[] = []
-
-chrome.storage.local.set({ 'traffic': [] as string[] })
+let current: ButtonState
+chrome.storage.local.get(items => {
+    current = items['state']
+    if (current == 'collecting') {
+        collectButton!.style.fill = 'red'
+    } else {
+        collectButton!.style.fill = 'green'
+    }
+})
 
 if (collectButton) {
-    chrome.storage.local.get(items => {
-        let cur = items['state'] as ButtonState
-        if (cur == 'ready') {
+    collectButton.onclick = () => {
+        if (current == 'collecting') {
             collectButton!.style.fill = 'green'
-            collectButton!.onclick = () => {
-                // chrome.tabs.getSelected(tab => {
-                //     chrome.tabs.reload(tab.id!)
-                // })
-                collectButton!.style.fill = 'red'
-                chrome.storage.local.set({ 'pac': [] })
-                chrome.storage.local.set({ 'state': 'collecting' })
-            }
+            chrome.storage.local.set({ 'state': 'ready' })
+            current = 'ready'
+            chrome.storage.local.set({ 'collected': [] })
         } else {
             collectButton!.style.fill = 'red'
-            collectButton!.onclick = () => {
-                collectButton!.style.fill = 'green'
-                chrome.storage.local.set({ 'state': 'ready' })
-                //chrome.tabs.create({ url: './options.html' })
-            }
+            chrome.storage.local.set({ 'state': 'collecting' })
+            current = 'collecting'
         }
-    })
+    }
 }

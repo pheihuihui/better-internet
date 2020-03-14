@@ -1,3 +1,5 @@
+import { RawRecord, ButtonState } from "./DataTypes";
+
 chrome.runtime.onInstalled.addListener(function () {
     //chrome.runtime.onMessage.addListener((mess, sender, resp) => { alert(mess) })
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
@@ -9,6 +11,7 @@ chrome.runtime.onInstalled.addListener(function () {
         }]);
     });
     chrome.storage.local.set({ 'pac': [] })
+    chrome.storage.local.set({ 'collected': [] })
     chrome.storage.local.set({ 'state': 'ready' })
     chrome.webRequest.onBeforeRequest.addListener(listn_req, { urls: [] }, [])
     chrome.webRequest.onCompleted.addListener(listn_comp, { urls: [] }, [])
@@ -21,17 +24,17 @@ chrome.runtime.onInstalled.addListener(function () {
 let listn_req = (req: chrome.webRequest.WebRequestBodyDetails) => {
     let st = chrome.storage.local.get(items => {
         let cur = items['state'] as ButtonState
-        let pac = items['pac'] as RawRecord[]
+        let collected = items['collected'] as RawRecord[]
         if (cur == 'collecting') {
             console.log('req')
             console.log(req)
-            pac.push({
+            collected.push({
                 requestID: req.requestId,
                 recordType: 'start',
                 url: req.url,
                 timeStamp: req.timeStamp
             })
-            chrome.storage.local.set({ 'pac': pac })
+            chrome.storage.local.set({ 'collected': collected })
             console.log('')
         }
     })
@@ -40,18 +43,18 @@ let listn_req = (req: chrome.webRequest.WebRequestBodyDetails) => {
 let listn_comp = (detail: chrome.webRequest.WebResponseCacheDetails) => {
     let st = chrome.storage.local.get(items => {
         let cur = items['state'] as ButtonState
-        let pac = items['pac'] as RawRecord[]
+        let collected = items['collected'] as RawRecord[]
         if (cur == 'collecting') {
             console.log('complete')
             console.log(detail)
-            pac.push({
+            collected.push({
                 requestID: detail.requestId,
                 recordType: 'complete',
                 url: detail.url,
                 timeStamp: detail.timeStamp,
                 statusCode: detail.statusCode
             })
-            chrome.storage.local.set({ 'pac': pac })
+            chrome.storage.local.set({ 'collected': collected })
             console.log('')
         }
     })
@@ -60,18 +63,18 @@ let listn_comp = (detail: chrome.webRequest.WebResponseCacheDetails) => {
 let listn_err = (detail: chrome.webRequest.WebResponseErrorDetails) => {
     let st = chrome.storage.local.get(items => {
         let cur = items['state'] as ButtonState
-        let pac = items['pac'] as RawRecord[]
+        let collected = items['collected'] as RawRecord[]
         if (cur == 'collecting') {
             console.log('error')
             console.log(detail)
-            pac.push({
+            collected.push({
                 requestID: detail.requestId,
                 recordType: 'error',
                 url: detail.url,
                 timeStamp: detail.timeStamp,
                 statusCode: detail.statusCode
             })
-            chrome.storage.local.set({ 'pac': pac })
+            chrome.storage.local.set({ 'collected': collected })
             console.log('')
         }
     })

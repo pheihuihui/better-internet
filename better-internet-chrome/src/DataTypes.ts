@@ -1,12 +1,12 @@
-type ButtonState = 'ready' | 'collecting'
-type StatusType = 'success' | 'error'
-type RecordType = 'start' | 'error' | 'complete'
+export type ButtonState = 'ready' | 'collecting'
+export type StatusType = 'success' | 'error'
+export type RecordType = 'start' | 'error' | 'complete'
 
-interface ValueType {
+export interface ValueType {
     content: string
 }
 
-interface RequestDetails {
+export interface RequestDetails {
     requestID: number
     url: string
     timeSpent: number
@@ -14,7 +14,7 @@ interface RequestDetails {
     comments?: RawRecord[]
 }
 
-interface RawRecord {
+export interface RawRecord {
     requestID: string
     recordType: RecordType
     url: string
@@ -22,32 +22,32 @@ interface RawRecord {
     statusCode?: number
 }
 
-interface DomainStatistics {
+export interface DomainStatistics {
     [domain: string]: RequestDetails[]
 }
 
-interface DomainListProps {
+export interface DomainListProps {
     domains: DomainStatistics,
     pac: string[]
 }
 
-interface DomainListState {
+export interface DomainListState {
     domains: DomainStatistics,
     pac: string[],
     selectedUrls: number[]
 }
 
-interface UrlItemProps {
+export interface UrlItemProps {
     domain: string,
     pac: string[],
     details: RequestDetails[]
 }
 
-interface UrlItemState {
+export interface UrlItemState {
     id: number,
     selected: boolean
 }
 
-interface RequestItemProps {
+export interface RequestItemProps {
     requests: RawRecord[]
 }
