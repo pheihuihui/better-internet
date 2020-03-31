@@ -1,6 +1,8 @@
 export type ButtonState = 'ready' | 'collecting'
 export type StatusType = 'success' | 'error'
 export type RecordType = 'start' | 'error' | 'complete'
+export type StringIndexable<V> = { [index: string]: V }
+export type NumberIndexable<V> = { [index: number]: V }
 
 export interface ValueType {
     content: string
@@ -50,4 +52,9 @@ export interface UrlItemState {
 
 export interface RequestItemProps {
     requests: RawRecord[]
+}
+
+export interface V2RayMessage {
+    newPac: string[]
+    needRestart: boolean
 }

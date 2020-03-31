@@ -18,8 +18,9 @@ if (collectButton) {
             collectButton!.style.fill = 'green'
             chrome.storage.local.set({ 'state': 'ready' })
             current = 'ready'
-            chrome.storage.local.set({ 'collected': [] })
+            // chrome.storage.local.set({ 'collected': [] })
         } else {
+            chrome.storage.local.set({ 'collected': [] })
             collectButton!.style.fill = 'red'
             chrome.storage.local.set({ 'state': 'collecting' })
             current = 'collecting'

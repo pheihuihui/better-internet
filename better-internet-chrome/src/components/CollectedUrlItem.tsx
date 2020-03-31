@@ -1,8 +1,8 @@
-import { ExpansionPanel, ExpansionPanelSummary, Typography, ExpansionPanelDetails } from "@material-ui/core";
-import React from "react";
+import { ExpansionPanel, ExpansionPanelSummary, Typography, ExpansionPanelDetails } from "@material-ui/core"
+import React from "react"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { RequestDetails, RawRecord } from "../DataTypes";
-import { myRequestInfosItem, RequestInfosItem } from "./RequestInfosItem";
+import { RequestDetails, RawRecord } from "../DataTypes"
+import { myRequestInfosItem, RequestInfosItem } from "./RequestInfosItem"
 
 type CollectedUrlItemProps = {
     detail: RequestDetails
@@ -19,15 +19,15 @@ export class CollectedUrlItem extends React.Component<CollectedUrlItemProps, {}>
 
     render() {
         return (
-            <ExpansionPanel disabled={!this.hasError}  style={{ flexDirection: 'column' }}>
+            <ExpansionPanel disabled={!this.hasError} style={{ flexDirection: 'column' }}>
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                 >
-                    <Typography>{this.props.detail.url}</Typography>
+                    <Typography style={{ width: 500 }}>{this.props.detail.url}</Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails  style={{ flexDirection: 'column' }}>
+                <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
                     {this.hasError ? <RequestInfosItem records={this.props.detail.comments!} /> : null}
                 </ExpansionPanelDetails>
             </ExpansionPanel>

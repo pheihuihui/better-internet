@@ -1,18 +1,16 @@
 
 import ReactDOM from "react-dom"
 import { myRequestInfosItem } from "./components/RequestInfosItem"
-import { RawRecord, DomainStatistics, RequestDetails } from "./DataTypes"
+import { RawRecord, DomainStatistics, RequestDetails, StringIndexable, V2RayMessage } from "./DataTypes"
 import { myColl } from "./components/CollectedUrlItem"
 import { getMyPacForm } from "./components/PacForm"
-
-
 
 chrome.storage.local.get(items => {
     let collected = items['collected'] as RawRecord[]
     let dis = document.getElementById('displayPanel')!
     let st = sortRequests(collected)
     console.log(st)
-    let pacForm = getMyPacForm(st, [])
+    let pacForm = getMyPacForm(st, [], [])
     ReactDOM.render(pacForm, dis)
 })
 
@@ -151,4 +149,22 @@ export function isMatched(long: string, short: string) {
     } else {
         return true
     }
+}
+
+export function getUpdatedDict(pre: StringIndexable<string>, newKeys: string[]) {
+    let res = pre
+    let preKeys = Object.keys(pre)
+    let added = newKeys.filter(x => !preKeys.includes(x))
+    let deleted = preKeys.filter(x => !newKeys.includes(x))
+    for (const u of deleted) {
+        delete res[u]
+    }
+    for (const u of added) {
+        res[u] = u
+    }
+    return res
+}
+
+export function sendMessageToV2Ray(mess: V2RayMessage) {
+
 }

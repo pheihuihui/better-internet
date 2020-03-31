@@ -2,32 +2,41 @@ import { SelectedDomainItem } from "./SelectedDomainItem";
 import React from "react";
 
 type SelectedDomainsListProps = {
-    domains: string[]
-    onInputsChanged: (dic: { [key: number]: string }) => void
+    domains: { [original: string]: string }
+    onInputsChanged: (dic: { [key: string]: string }) => void
 }
 
-export class SelectedDomainsList extends React.Component<SelectedDomainsListProps, {}>{
+type SelectedDomainsListState = {
+    modified: { [original: string]: string }
+}
 
-    private domainsDic: { [key: number]: string }
+export class SelectedDomainsList extends React.Component<SelectedDomainsListProps, SelectedDomainsListState>{
+
 
     constructor(props: Readonly<SelectedDomainsListProps>) {
         super(props)
-        this.domainsDic = props.domains.reduce((pre: { [key: number]: string }, cur, ind) => {
-            pre[ind] = cur
-            return pre
-        }, {})
+        // this.domainsDic = props.domains.reduce((pre: { [key: number]: string }, cur, ind) => {
+        //     pre[ind] = cur
+        //     return pre
+        // }, {})
+        this.state = {
+            modified: this.props.domains
+        }
     }
 
     render() {
-        return (this.props.domains.map((u, i) =>
+        let domainKeys = Object.keys(this.props.domains)
+        return (domainKeys.map((u, i) =>
             <SelectedDomainItem
                 domainName={u}
                 key={i}
                 anotherKey={i}
                 onContentChanged={
                     (c, i) => {
-                        this.domainsDic[i] = c
-                        this.props.onInputsChanged(this.domainsDic)
+                        let tmp = this.state.modified
+                        tmp[i] = c
+                        this.setState({ modified: tmp })
+                        this.props.onInputsChanged(tmp)
                     }} />
         ))
     }

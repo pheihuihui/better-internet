@@ -45,10 +45,10 @@ export class CollectedDomainItem extends React.Component<CollectedDomainItemProp
                             disabled={this.props.disabled}
                             onChange={e => { this.props.onItemChanged(this.props.itemID, e.target.checked) }}
                         />}
-                        label="I acknowledge that "
+                        label={this.props.domain}
                     />
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails  style={{ flexDirection: 'column' }}> 
+                <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
                     <CollectedUrlsList details={this.props.requests} />
                 </ExpansionPanelDetails>
             </ExpansionPanel>

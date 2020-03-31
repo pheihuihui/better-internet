@@ -1,0 +1,3 @@
+[submodule "v2rayN/v2rayN"]
+	path = v2rayN/v2rayN
+	url = https://github.com/pheihuihui/v2rayN

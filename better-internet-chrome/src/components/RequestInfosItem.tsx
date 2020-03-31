@@ -11,7 +11,7 @@ export class RequestInfosItem extends React.Component<RequestInfosItemProps, {}>
     }
     render() {
         return (
-            this.props.records.map(u => <div>{this.printRecord(u)}</div>)
+            this.props.records.map(u => <div style={{ width: 500 }}>{this.printRecord(u)}</div>)
         )
     }
 }

@@ -12,7 +12,7 @@ type CollectedDomainsListProps = {
 export class CollectedDomainsList extends React.Component<CollectedDomainsListProps, {}> {
 
     private domains: string[]
-    private domainSet: Set<string>
+    private checkedDomains: Set<string>
 
     constructor(props: Readonly<CollectedDomainsListProps>) {
         super(props)
@@ -24,7 +24,7 @@ export class CollectedDomainsList extends React.Component<CollectedDomainsListPr
             }
         }
         this.domains = sortDomains(tmp)
-        this.domainSet = new Set(this.domains)
+        this.checkedDomains = new Set<string>()
     }
 
     private isDominMatchedInPac(domain: string) {
@@ -42,11 +42,12 @@ export class CollectedDomainsList extends React.Component<CollectedDomainsListPr
                 <CollectedDomainItem
                     onItemChanged={(n, b) => {
                         if (b) {
-                            this.domainSet.add(this.domains[n])
+                            this.checkedDomains.add(this.domains[n])
                         } else {
-                            this.domainSet.delete(this.domains[n])
+                            this.checkedDomains.delete(this.domains[n])
                         }
-                        this.props.onListChanged(this.domainSet)
+                        this.props.onListChanged(this.checkedDomains)
+                        console.log(this.checkedDomains)
                     }}
                     disabled={this.isDominMatchedInPac(u)}
                     itemID={i}

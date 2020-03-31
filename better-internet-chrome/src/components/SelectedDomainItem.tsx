@@ -5,7 +5,7 @@ import React from "react";
 type SelectedDomainItemProps = {
     anotherKey: number
     domainName: string
-    onContentChanged: (val: string, ind: number) => void
+    onContentChanged: (val: string, ind: string) => void
 }
 
 type SelectedDomainItemState = {
@@ -16,9 +16,9 @@ export class SelectedDomainItem extends React.Component<SelectedDomainItemProps,
 
     constructor(props: Readonly<SelectedDomainItemProps>) {
         super(props)
-        this.state = {
-            content: ''
-        }
+        // this.state = {
+        //     content: this.props.domainName
+        // }
     }
 
     render() {
@@ -35,7 +35,7 @@ export class SelectedDomainItem extends React.Component<SelectedDomainItemProps,
                 }}
                 variant="outlined"
                 onChange={e => {
-                    this.props.onContentChanged(e.target.value, this.props.anotherKey)
+                    this.props.onContentChanged(e.target.value, this.props.domainName)
                 }}
             />
         )

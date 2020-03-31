@@ -3,14 +3,18 @@ import React from "react";
 import { DomainStatistics } from "../DataTypes";
 import { CollectedDomainsList } from "./CollectedDomainsList";
 import { SelectedDomainsList } from "./SelectedDomainsList";
+import { getUpdatedDict } from "../options";
 
 type PacFormProps = {
     domains: DomainStatistics,
     pac: string[]
+    ignored: string[]
 }
 
 type PacFormState = {
-    selected: string[]
+    modifiedSelected: {
+        [originalSelected: string]: string
+    }
 }
 
 export class PacForm extends React.Component<PacFormProps, PacFormState> {
@@ -18,7 +22,7 @@ export class PacForm extends React.Component<PacFormProps, PacFormState> {
     constructor(props: Readonly<PacFormProps>) {
         super(props)
         this.state = {
-            selected: []
+            modifiedSelected: {}
         }
     }
 
@@ -31,18 +35,26 @@ export class PacForm extends React.Component<PacFormProps, PacFormState> {
                         domainStatistics={this.props.domains}
                         pac={this.props.pac}
                         onListChanged={s => {
-                            this.setState({ selected: Array.from(s) })
+                            let pre = this.state.modifiedSelected
+                            let newKeys = Array.from(s)
+                            let cur = getUpdatedDict(pre, newKeys)
+                            this.setState({ modifiedSelected: cur })
                             console.log(this.state)
                         }} />
                 </Grid>
 
-                <Grid key={1} item={true}>
-                    <Button variant='contained' color='primary' onClick={() => console.log(this.state.selected)}>Update</Button>
+                <Grid style={{ width: 500 }} key={1} item={true}>
+                    {/* <Button variant='contained' color='primary' onClick={() => console.log(this.state.selected)}>Update</Button> */}
+                    <Button variant='contained' color='primary' onClick={() => {
+                        chrome.runtime.sendNativeMessage('my.pheihuihui.better_internet', { text: 'hello' }, res => {
+                            console.log(res)
+                        })
+                    }}>Update</Button>
                     <SelectedDomainsList
-                        domains={this.state.selected}
+                        domains={this.state.modifiedSelected}
                         onInputsChanged={
                             c => {
-                                this.setState({ selected: Object.values(c) })
+                                this.setState({ modifiedSelected: c })
                             }} />
                 </Grid>
 
@@ -52,6 +64,6 @@ export class PacForm extends React.Component<PacFormProps, PacFormState> {
 }
 
 
-export function getMyPacForm(st: DomainStatistics, pac: string[]) {
-    return <PacForm domains={st} pac={pac}></PacForm>
+export function getMyPacForm(st: DomainStatistics, pac: string[], ignored: string[]) {
+    return <PacForm domains={st} pac={pac} ignored={ignored}></PacForm>
 }
