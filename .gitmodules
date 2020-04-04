@@ -1,0 +1,6 @@
+[submodule "better-internet-chrome"]
+	path = better-internet-chrome
+	url = https://github.com/pheihuihui/chrome-extension-better-internet.git
+[submodule "better-internet-desktop"]
+	path = better-internet-desktop
+	url = https://github.com/pheihuihui/v2rayN.git
